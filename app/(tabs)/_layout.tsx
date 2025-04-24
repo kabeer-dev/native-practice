@@ -1,45 +1,82 @@
-import { Tabs } from 'expo-router';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { Platform } from 'react-native';
+import {ThemedText} from '@/components/ThemedText';
+import {Tabs} from 'expo-router';
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Octicons from '@expo/vector-icons/Octicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import {Colors} from '@/constants/Colors';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function _layout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarStyle: {
+          backgroundColor: Colors.light.background,
+          height: 80,
+          paddingTop: 20,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <Entypo
+              name="home"
+              size={24}
+              color={focused ? Colors.light.tint : Colors.light.icon}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="cart"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <FontAwesome5
+              name="shopping-bag"
+              size={24}
+              color={focused ? Colors.light.tint : Colors.light.icon}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="liked"
+        options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <Octicons
+              name="heart-fill"
+              size={24}
+              color={focused ? Colors.light.tint : Colors.light.icon}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notification"
+        options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <MaterialIcons
+              name="notifications"
+              size={24}
+              color={focused ? Colors.light.tint : Colors.light.icon}
+            />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({});
